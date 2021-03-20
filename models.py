@@ -24,15 +24,22 @@ class User(db.Model, UserMixin):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(32), index=True, unique=True)
+    month_sum = db.Column(db.Float, default=0)
 
     def __repr__(self):
         return self.label
 
+    def summary(self):
+        self.month_sum = 0
+        for ex in Expense.query.filter_by(category=self.id):
+            self.month_sum += ex.cost
+        db.session.commit()
+
 
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    label = db.Column(db.String, index=True, unique=True)
-    cost = db.Column(db.Float, index=True, unique=True)
+    label = db.Column(db.String)
+    cost = db.Column(db.Float)
     category = db.Column(db.Integer, db.ForeignKey('category.id'))
     user = db.Column(db.Integer, db.ForeignKey('user.id'))
 

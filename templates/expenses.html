@@ -3,42 +3,68 @@
 {% block title %}Expenses{% endblock %}
 
 {% block content %}
-<div class="container">
+    {% if categories %}
+        <div class="container">
 
 
-<div class="row d-flex justify-content-center">
-<form method="post" class="form text-center w-50 align-self-center">
-      {{ form.hidden_tag() }}
-        <div class="form-group text-center">
-            <br>
-            {{ form.label(class='form-control', id='label', placeholder='Label') }}
-            <br>
-            {{ form.cost(class='form-control', id='cost', placeholder='Cost') }}
-            <br>
-            {{ form.category(class='form-control', id='category') }}
-            <br>
-            {{ form.submit(class='btn btn-success', type='submit') }}
+        <div class="row d-flex justify-content-center">
+        <form method="post" class="form text-center w-50 align-self-center">
+              {{ form.hidden_tag() }}
+                <div class="form-group text-center">
+                    <br>
+                    {{ form.label(class='form-control', id='label', placeholder='Label') }}
+                    <br>
+                    {{ form.cost(class='form-control', id='cost', placeholder='Cost') }}
+                    <br>
+                    {{ form.category(class='form-control', id='category') }}
+                    <br>
+                    {{ form.submit(class='btn btn-success', type='submit') }}
+                </div>
+        </form>
+
         </div>
-</form>
+        <br>
+            <div class="row d-flex justify-content-center">
+                <h2>Expenses: </h2>
+            </div>
 
-</div>
-<br>
-    <div class="row d-flex justify-content-center">
-        <h2>Expenses: </h2>
-    </div>
-    <div class="row d-flex justify-content-center">
-    <div class="list-group d-flex justify-content-center text-center">
-    <br><br>
-        <ul>
-            {% for expense in items %}
-            <li class="list-group-item">{{ expense }}</li>
+
+            {% for category in categories %}
+                <br><br>
+                <div class="row d-flex justify-content-center">
+                    <div class="col">
+                        <h3>{{ category }}: <div class="text-info">{{ category.month_sum }}zł</div></h3>
+                    </div>
+                    <div class="col">
+                        <div class="list-group d-flex justify-content-center text-center">
+                            <ul>
+                                {% for expense in items %}
+                                    {% if expense.category == category.id %}
+                                        <li class="list-group-item">{{ expense }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
-        </ul>
-    </div>
-    </div>
-<br>
+                <div class="row d-flex justify-content-center">
+                    <h3>Sum: {{ money }}zł</h3>
+                </div>
 
-</div>
+        <br>
 
+        </div>
+
+    {% else %}
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">You have to add Categories first</h2>
+                <img class="card-img-top" src="/static/images/sorry.jpg">
+                <a class="btn btn-primary card-link" href="{{ url_for('category') }}">Click Here</a>
+            </div>
+        </div>
+
+    {% endif %}
 
 {% endblock %}

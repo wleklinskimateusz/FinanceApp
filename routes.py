@@ -11,8 +11,17 @@ def load_user(id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    pass
+    return render_template('error.html', title="You don't have access", photo='/static/images/not_pass.jpg')
 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error.html',
+                           photo="/static/images/nothing.jpg",
+                           photo_text="No Can Do",
+                           text="Daaaamn, Looks like you have wrong Address",
+                           title="No Can Do"
+                           ), 404
 
 
 @app.route('/')
@@ -44,7 +53,11 @@ def expense():
         db.session.add(ex)
         db.session.commit()
         return redirect(url_for('expense'))
-    return render_template('expenses.html', form=form, items=Expense.query.all())
+    saldo = 0
+    for cat in Category.query.all():
+        cat.summary()
+        saldo += cat.month_sum
+    return render_template('expenses.html', form=form, items=Expense.query.all(), categories=Category.query.all(), money=saldo)
 
 
 
