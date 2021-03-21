@@ -5,17 +5,22 @@
 {% block content %}
 <div class="container">
 
-
+{% if not current_user.is_authenticated %}
+            <p class="text-white">You have to be logged in to add category</p>
+        {% endif %}
 <div class="row d-flex justify-content-center">
-<form method="post" class="form text-center w-50 align-self-center">
-      {{ form.hidden_tag() }}
-        <div class="form-group text-center">
-            <br>
-            {{ form.label(class='form-control', id='label', placeholder='Label') }}
-            <br>
-            {{ form.submit(class='btn btn-success', type='submit') }}
-        </div>
-</form>
+    <div class="col d-flex justify-content-center">
+        <form method="post" class="form text-center w-50 align-self-center">
+          {{ form.hidden_tag() }}
+            <div class="form-group text-center">
+                <br>
+                {{ form.label(class='form-control', id='label', placeholder='Label') }}
+                <br>
+                {{ form.submit(class='btn btn-success', type='submit') }}
+            </div>
+        </form>
+    </div>
+
 
 </div>
 <br>

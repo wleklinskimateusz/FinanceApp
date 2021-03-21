@@ -17,7 +17,13 @@
                     {{ form.cost(class='form-control', id='cost', placeholder='Cost') }}
                     <br>
                     {{ form.category(class='form-control', id='category') }}
+                     <br>
+                    {{ form.date(class='form-control', id='date', type='date') }}
+                     <br>
+                    <p>Refund<br>
+                        {{ form.refund(class='form-check-input', id='refund') }}</p>
                     <br>
+
                     {{ form.submit(class='btn btn-success', type='submit') }}
                 </div>
         </form>

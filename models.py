@@ -25,14 +25,17 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(32), index=True, unique=True)
     month_sum = db.Column(db.Float, default=0)
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return self.label
 
     def summary(self):
-        self.month_sum = 0
-        for ex in Expense.query.filter_by(category=self.id):
-            self.month_sum += ex.cost
+        output = 0
+        for ex in Expense.query.filter_by(category=self.id, user=self.owner):
+            output += ex.cost
+
+        self.month_sum = output
         db.session.commit()
 
 
@@ -42,6 +45,8 @@ class Expense(db.Model):
     cost = db.Column(db.Float)
     category = db.Column(db.Integer, db.ForeignKey('category.id'))
     user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    refund = db.Column(db.Boolean, default=False)
+    date = db.Column(db.DateTime, default=datetime.utcnow())
 
     def __repr__(self):
         return f"{self.label}, {self.cost}zł"
