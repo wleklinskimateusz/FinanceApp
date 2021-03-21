@@ -6,8 +6,16 @@
 <div class="container">
 
 {% if not current_user.is_authenticated %}
-            <p class="text-white">You have to be logged in to add category</p>
-        {% endif %}
+    <div class="card">
+        <div class="card-body text-center">
+            <h3 class="card-title">Not Logged in</h3>
+            <img src="/static/images/no_one.jpg" class="card-img-top">
+            <p class="text-white card-text">You have to be logged in to add category</p>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-success card-link">Login</a>
+        </div>
+    </div>
+
+        {% else %}
 <div class="row d-flex justify-content-center">
     <div class="col d-flex justify-content-center">
         <form method="post" class="form text-center w-50 align-self-center">
@@ -38,6 +46,7 @@
     </div>
     </div>
 <br>
+{% endif %}
 
 </div>
 
