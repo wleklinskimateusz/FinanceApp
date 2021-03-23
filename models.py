@@ -41,7 +41,7 @@ class Category(db.Model):
 
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    label = db.Column(db.String)
+    label = db.Column(db.String(50))
     cost = db.Column(db.Float)
     category = db.Column(db.Integer, db.ForeignKey('category.id'))
     user = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -50,4 +50,41 @@ class Expense(db.Model):
 
     def __repr__(self):
         return f"{self.label}, {self.cost}zł"
+
+
+### Korki
+
+class Student(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), index=True, unique=True)
+    hourly_rate = db.Column(db.Float)
+    total = db.Column(db.Float, nullable=True)
+    paid = db.Column(db.Float, nullable=True)
+
+    def money_total(self):
+        self.total = self.hourly_rate * len(Lesson.query.filter_by(student=self.id))
+        db.session.commit()
+        return self.total
+
+    def money_paid(self):
+        self.paid = 0
+        for p in Payment.query.filter_by(student=self.id):
+            self.paid += p.value
+        return self.paid
+
+    def to_pay(self):
+        return self.money_total() - self.money_paid()
+
+
+class Payment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.Float)
+    date = db.Column(db.DateTime, default=datetime.utcnow())
+    student = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+
+class Lesson(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student = db.Column(db.Integer, db.ForeignKey('student.id'))
+    topic = db.Column(db.String, nullable=True)
 
