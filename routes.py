@@ -1,7 +1,7 @@
 from app import app, db, login_manager
 from flask import render_template, redirect, url_for, Response
-from forms import CategoryForm, ExpenseForm, LoginForm
-from models import Category, User, Expense
+from forms import CategoryForm, ExpenseForm, LoginForm, StudentForm, PaymentForm, LessonForm
+from models import Category, User, Expense, Student, Lesson, Payment
 from flask_login import current_user, login_required, logout_user, login_user
 import io
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
@@ -61,7 +61,7 @@ def login():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', home=True)
 
 
 @app.route('/category', methods=['GET', 'POST'])
@@ -77,7 +77,7 @@ def category():
         db.session.add(cat)
         db.session.commit()
         return redirect(url_for('category'))
-    return render_template("category.html", form=form, items=items)
+    return render_template("category.html", form=form, items=items, category=True)
 
 
 @app.route('/expense', methods=['GET', 'POST'])
@@ -105,7 +105,8 @@ def expense():
         form=form,
         items=Expense.query.filter_by(user=ID).all(),
         categories=Category.query.filter_by(owner=ID).all(),
-        money=saldo
+        money=saldo,
+        expense=True
     )
 
 
@@ -126,8 +127,21 @@ def plot_png():
     return Response(output.getvalue(), mimetype='image/png')
 
 
+@app.route('/tutoring')
+def tutoring():
+
+    return render_template('tutoring.html', tutoring=True)
 
 
+@app.route('/tutoring/students', methods=['GET', 'POST'])
+def students():
+    form = StudentForm()
+    if form.validate_on_submit():
+        s = Student()
+        s.name = form.name.data
+        s.hourly_rate = form.hourly_rate.data
+        db.session.add(s)
+        db.session.commit()
+        return redirect(url_for('students'))
 
-
-
+    return render_template('students.html', tutoring=True, form=form, students=Student.query.all())

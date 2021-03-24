@@ -11,11 +11,13 @@
     <link rel="shortcut icon" href="/static/favicon.ico">
 </head>
 <body>
+<div class="col">
 
-<div class="container bg-primary rounded">
+
+<div class="container-fluid bg-primary rounded ">
     <div class="row d-flex justify-content-center sticky-top bg-primary">
-        <div class="col-3"></div>
-        <div class="col-6 bg-primary text-center justify-content-center">
+        <div class="col-2"></div>
+        <div class="col-8 bg-primary d-flex text-center justify-content-center">
             <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand btn text-white" href="/">Navbar</a>
             <button class="navbar-toggler"
@@ -39,32 +41,43 @@
                         <a href="{{ url_for('expense') }}" class="nav-link btn text-white {% if expenses %}active{% endif %}">Expenses</a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ url_for('tutoring') }}" class="nav-link btn text-white {% if tutoring %}active{% endif %}">Tutoring</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link btn text-white {% if panel %}active{% endif %} {% if not admin %}disabled{% endif %}">Panel</a>
                     </li>
                 </ul>
             </div>
         </nav>
         </div>
-        <div class="col-3">
-            {% if current_user.is_authenticated %}
-                <h3 class="text-white display-5">Hello {{ current_user }}</h3>
-                <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
-            {% else %}
+        <div class="col-2">
+
+
+            {% if not current_user.is_authenticated %}
                 <a href="{{ url_for('login') }}" class="btn btn-success">Login</a>
             {% endif %}
         </div>
 
     </div>
     <div class="row bg-secondary rounded d-flex justify-content-center">
-        <div class="col-3"></div>
-        <div class="col-6 d-flex justify-content-center">
+        <div class="col-2"></div>
+        <div class="col-8 d-flex justify-content-center">
             {% block content %}
 
             {% endblock %}
         </div>
-        <div class="col-3"></div>
+        <div class="col-2">
+            {% if current_user.is_authenticated %}
+                <div class="card">
+                    <div class="card-body border text-center">
+                        <h3 class="card-title">Hello {{ current_user }}</h3>
+                        <a href="{{ url_for('logout') }}" class="btn btn-danger card-link">Logout</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </div>
-
+</div>
 </body>
 </html>

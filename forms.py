@@ -22,3 +22,23 @@ class ExpenseForm(FlaskForm):
     date = DateField("Date", default=datetime.utcnow())
     refund = BooleanField("Refund")
     submit = SubmitField("Add Expense")
+
+
+class StudentForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    hourly_rate = FloatField("Hourly Rate")
+    submit = SubmitField("Add Student")
+
+
+class PaymentForm(FlaskForm):
+    student = SelectField(u'Student', coerce=int)
+    value = FloatField()
+    date = DateField(default=datetime.utcnow())
+    submit = SubmitField("Add Payment")
+
+
+class LessonForm(FlaskForm):
+    student = SelectField(u'Student', coerce=int)
+    topic = StringField("Topic")
+    submit = SubmitField("Add Lesson")
+

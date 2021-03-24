@@ -75,6 +75,9 @@ class Student(db.Model):
     def to_pay(self):
         return self.money_total() - self.money_paid()
 
+    def __repr__(self):
+        return self.name
+
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
