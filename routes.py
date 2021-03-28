@@ -130,7 +130,7 @@ def plot_png():
 @app.route('/tutoring')
 def tutoring():
 
-    return render_template('tutoring.html', tutoring=True)
+    return render_template('tutoring.html', tutoring=True, summary_active=True)
 
 
 @app.route('/tutoring/students', methods=['GET', 'POST'])
@@ -144,4 +144,38 @@ def students():
         db.session.commit()
         return redirect(url_for('students'))
 
-    return render_template('students.html', tutoring=True, form=form, students=Student.query.all())
+    return render_template('students.html', tutoring=True, form=form, students=Student.query.all(), students_active=True)
+
+
+@app.route('/tutoring/students/<int:student_id>')
+def student(student_id):
+    return render_template('student.html', student=Student.query.filter_by(id=student_id).first())
+
+
+@app.route('/tutoring/lessons', methods=['GET', 'POST'])
+def lessons():
+    form = LessonForm()
+    form.student.choices = [(s.id, s.name) for s in Student.query.all()]
+    if form.validate_on_submit():
+        lesson = Lesson()
+        lesson.topic = form.topic.data
+        lesson.student = form.student.data
+        db.session.add(lesson)
+        db.session.commit()
+        return redirect(url_for('lessons'))
+    return render_template('lessons.html', form=form, students=Student.query.all(), Lesson=Lesson, lessons_active=True)
+
+
+@app.route('/tutoring/payments', methods=['GET', 'POST'])
+def payments():
+    form = PaymentForm()
+    form.student.choices = [(s.id, s.name) for s in Student.query.all()]
+    if form.validate_on_submit():
+        payment = Payment()
+        payment.student = form.student.data
+        payment.date = form.date.data
+        payment.value = form.value.data
+        db.session.add(payment)
+        db.session.commit()
+        return redirect(url_for('payments'))
+    return render_template('payments.html', students=Student.query.all(), form=form, Payment=Payment, payments_active=True)

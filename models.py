@@ -62,7 +62,7 @@ class Student(db.Model):
     paid = db.Column(db.Float, nullable=True)
 
     def money_total(self):
-        self.total = self.hourly_rate * len(Lesson.query.filter_by(student=self.id))
+        self.total = self.hourly_rate * len(Lesson.query.filter_by(student=self.id).all())
         db.session.commit()
         return self.total
 
@@ -70,6 +70,7 @@ class Student(db.Model):
         self.paid = 0
         for p in Payment.query.filter_by(student=self.id):
             self.paid += p.value
+        db.session.commit()
         return self.paid
 
     def to_pay(self):
@@ -85,9 +86,16 @@ class Payment(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow())
     student = db.Column(db.Integer, db.ForeignKey('student.id'))
 
+    def __repr__(self):
+        return f"{self.value}zł, {self.date.date()}"
+
 
 class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     student = db.Column(db.Integer, db.ForeignKey('student.id'))
     topic = db.Column(db.String, nullable=True)
+    date = db.Column(db.DateTime, default=datetime.utcnow())
+
+    def __repr__(self):
+        return f"{self.topic}, {self.date.date()}"
 

@@ -40,5 +40,6 @@ class PaymentForm(FlaskForm):
 class LessonForm(FlaskForm):
     student = SelectField(u'Student', coerce=int)
     topic = StringField("Topic")
+    date = DateField(default=datetime.utcnow())
     submit = SubmitField("Add Lesson")
 

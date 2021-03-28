@@ -1,0 +1,49 @@
+{% extends 'tutoring.html' %}
+
+{% block title %}Payments{% endblock %}
+
+{% block content2 %}
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col">
+            <form method="post" class="form text-center">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <br>
+                    {{ form.student(class='form-control', id='student') }}
+                    <br>
+                    {{ form.value(class='form-control', id='value', placeholder='Value') }}
+                    <br>
+                    {{ form.date(class='form-control', id='date', type='date') }}
+                    <br>
+                    {{ form.submit(class='btn btn-success', type='submit') }}
+                </div>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col">
+            {% for student in students %}
+                {% if Payment.query.filter_by(student=student.id) %}
+                <h2>{{ student.name }}</h2>
+                <ul class="list-group"></ul>
+                    {% for payment in Payment.query.filter_by(student=student.id) %}
+                        <li class="list-group-item list-group-item-dark">{{ payment }}</li>
+                    {% endfor %}
+                {% endif %}
+                <br>
+
+            {% endfor %}
+
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+{% endblock %}

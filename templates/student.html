@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ student }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <br>
+                <h3 class="display-5 text-center text-white">Left to pay: {{ student.to_pay() }}zł</h3>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h2 class="card-title text-center">
+                            {{ student }}
+                        </h2>
+                        <p class="card-text text-center">
+                            ID: {{ student.id }}<br>
+                            Name: {{ student.name }}<br>
+                            Hourly Rate: {{ student.hourly_rate }}zł/h<br>
+                            Money_total: {{ student.money_total() }}zł<br>
+                            Money_paid: {{ student.money_paid() }}zł<br>
+                        </p>
+                        <a href="#" class="card-link btn btn-primary">Edit</a>
+                        <a href="#" class="card-link btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <br>
+                <a href="{{ url_for('students') }}" class="btn btn-success text-center">All Students</a>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

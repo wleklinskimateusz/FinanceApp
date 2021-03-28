@@ -32,7 +32,9 @@
             <div class="col">
                 <ul class="list-group">
                     {% for student in students %}
-                        <li class="list-group-item list-group-item-dark">{{ student }}</li>
+                        <a href="{{ url_for('student', student_id=student.id) }}">
+                            <li class="list-group-item list-group-item-dark text-center">{{ student }}</li>
+                        </a>
                     {% endfor %}
                 </ul>
             </div>
