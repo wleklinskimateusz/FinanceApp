@@ -3,10 +3,10 @@
 {% block title %}Categories{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
 
 {% if not current_user.is_authenticated %}
-    <div class="card">
+    <div class="card justify-content-center">
         <div class="card-body text-center">
             <h3 class="card-title">Not Logged in</h3>
             <img src="/static/images/no_one.jpg" class="card-img-top">

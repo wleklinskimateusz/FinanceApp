@@ -149,7 +149,11 @@ def students():
 
 @app.route('/tutoring/students/<int:student_id>')
 def student(student_id):
-    return render_template('student.html', student=Student.query.filter_by(id=student_id).first())
+    return render_template(
+        'student.html',
+        student=Student.query.filter_by(id=student_id).first(),
+        students_active=True
+    )
 
 
 @app.route('/tutoring/lessons', methods=['GET', 'POST'])
@@ -179,3 +183,13 @@ def payments():
         db.session.commit()
         return redirect(url_for('payments'))
     return render_template('payments.html', students=Student.query.all(), form=form, Payment=Payment, payments_active=True)
+
+
+@app.route('/tutoring/payments/<int:payment_id>')
+def payment(payment_id):
+    return render_template(
+        'payment.html',
+        payment=Payment.query.filter_by(id=payment_id).first(),
+        Student=Student,
+        payments_active=True
+    )

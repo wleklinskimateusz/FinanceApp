@@ -87,7 +87,7 @@ class Payment(db.Model):
     student = db.Column(db.Integer, db.ForeignKey('student.id'))
 
     def __repr__(self):
-        return f"{self.value}zł, {self.date.date()}"
+        return f"{self.value}zł from {Student.query.filter_by(id=self.student).first()}"
 
 
 class Lesson(db.Model):

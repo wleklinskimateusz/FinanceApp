@@ -12,11 +12,11 @@
             <div class="col">
             <form method="post" class="form text-center">
                 {{ form.hidden_tag() }}
-                <div class="form-group">
+                <div class="form-group text-center">
                     <br>
-                    {{ form.name(class='form-control', id='name', placeholder="Name") }}
+                    {{ form.name(class='form-control text-center', id='name', placeholder="Name") }}
                     <br>
-                    {{ form.hourly_rate(class='form-control', id='hourly_rate', placeholder="Hourly Rate") }}
+                    {{ form.hourly_rate(class='form-control text-center', id='hourly_rate', placeholder="Hourly Rate") }}
                     <br>
                     {{ form.submit(class='btn btn-success', type='submit') }}
                 </div>
@@ -32,9 +32,11 @@
             <div class="col">
                 <ul class="list-group">
                     {% for student in students %}
-                        <a href="{{ url_for('student', student_id=student.id) }}">
-                            <li class="list-group-item list-group-item-dark text-center">{{ student }}</li>
-                        </a>
+                        <li class="list-group-item text-center">
+                            <a class="btn-link btn " href="{{ url_for('student', student_id=student.id) }}">
+                                {{ student }}
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>

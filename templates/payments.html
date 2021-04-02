@@ -14,9 +14,9 @@
                     <br>
                     {{ form.student(class='form-control', id='student') }}
                     <br>
-                    {{ form.value(class='form-control', id='value', placeholder='Value') }}
+                    {{ form.value(class='form-control text-center', id='value', placeholder='Value') }}
                     <br>
-                    {{ form.date(class='form-control', id='date', type='date') }}
+                    {{ form.date(class='form-control text-center', id='date', type='date') }}
                     <br>
                     {{ form.submit(class='btn btn-success', type='submit') }}
                 </div>
@@ -34,7 +34,9 @@
                 <h2>{{ student.name }}</h2>
                 <ul class="list-group"></ul>
                     {% for payment in Payment.query.filter_by(student=student.id) %}
-                        <li class="list-group-item list-group-item-dark">{{ payment }}</li>
+                        <a class="btn btn-link" href="{{ url_for('payment', payment_id=payment.id) }}">
+                            <li class="list-group-item">{{ payment }}</li>
+                        </a>
                     {% endfor %}
                 {% endif %}
                 <br>
