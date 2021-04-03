@@ -87,6 +87,7 @@ def expense():
     if current_user.is_authenticated:
         ID = current_user.id
     form.category.choices = [(c.id, c.label) for c in Category.query.filter_by(owner=ID).order_by('label').all()]
+    form.split_with.choices = [(u.id, u.username) for u in User.query.all()]
     if form.validate_on_submit():
         ex = Expense()
         ex.label = form.label.data

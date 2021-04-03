@@ -21,6 +21,8 @@ class ExpenseForm(FlaskForm):
     category = SelectField(u'Category', coerce=int)
     date = DateField("Date", default=datetime.utcnow())
     refund = BooleanField("Refund")
+    split = BooleanField("Split")
+    split_with = SelectField(u'Users', coerce=int)
     submit = SubmitField("Add Expense")
 
 

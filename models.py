@@ -46,6 +46,8 @@ class Expense(db.Model):
     category = db.Column(db.Integer, db.ForeignKey('category.id'))
     user = db.Column(db.Integer, db.ForeignKey('user.id'))
     refund = db.Column(db.Boolean, default=False)
+    split = db.Column(db.Boolean, default=False)
+    split_with = db.Column(db.Integer, db.ForeignKey('user.id'))
     date = db.Column(db.DateTime, default=datetime.utcnow())
 
     def __repr__(self):

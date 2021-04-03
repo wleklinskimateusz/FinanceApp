@@ -21,6 +21,14 @@
                             <br>
                             {{ form.category(class='form-control', id='category') }}
                              <br>
+                            <div class="form-check">
+
+                                {{ form.split(class='form-check-input',type="checkbox", id='split') }}
+                                <label class="form-check-label" for="split">Split</label>
+                            </div>
+                            <br>
+                            {{ form.split_with(class='form-control', id='split_with') }}
+                             <br>
                             {{ form.date(class='form-control', id='date', type='date') }}
                              <br>
                             <div class="form-check">
