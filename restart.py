@@ -1,5 +1,4 @@
-from app import db
-from models import User, Category, Expense
+from flaskr import db
 from os import path, remove
 db_name = "myDB.db"
 
@@ -13,6 +12,6 @@ query = input("Want to add an admin? (Y/N): ")
 
 
 if query.lower() == "y":
-    import add_user
+    pass
 
 

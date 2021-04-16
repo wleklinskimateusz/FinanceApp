@@ -1,7 +1,7 @@
 from getpass import getpass
 
 from app import db
-from models import User
+from flaskr.models import User
 
 username = input("Username: ")
 password = getpass("Password: ")
