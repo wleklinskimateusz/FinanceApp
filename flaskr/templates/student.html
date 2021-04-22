@@ -17,7 +17,15 @@
                     <div class="card-body text-center">
                         <h2 class="card-title text-center">
                             {{ student }}
+                            {% if student.messenger_link %}
+                                <a href="{{ student.messenger_link }}">
+                                <img src="{{ url_for('static', filename='mess.png') }}"
+                                     class="card-img-bottom w-25">
+                                </a>
+                            {% endif %}
+
                         </h2>
+                        <br>
                         <p class="card-text text-center">
                             ID: {{ student.id }}<br>
                             Name: {{ student.name }}<br>
@@ -27,6 +35,7 @@
                         </p>
                         <a href="#" class="card-link btn btn-primary">Edit</a>
                         <a href="#" class="card-link btn btn-danger">Delete</a>
+
                     </div>
                 </div>
                 <br>

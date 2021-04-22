@@ -23,6 +23,7 @@ def students():
         s = Student()
         s.name = form.name.data
         s.hourly_rate = form.hourly_rate.data
+        s.messenger_link = form.messenger_link.data
         db.session.add(s)
         db.session.commit()
         return redirect(url_for('tutoring.students'))
