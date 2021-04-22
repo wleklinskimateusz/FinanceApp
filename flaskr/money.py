@@ -1,7 +1,11 @@
+import io
+
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, Response
 )
 from flask_login import current_user
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 from .forms import CategoryForm, ExpenseForm
 from .models import Category, Expense, User
@@ -27,7 +31,7 @@ def category():
         cat.owner = current_user.id
         db.session.add(cat)
         db.session.commit()
-        return redirect(url_for('category'))
+        return redirect(url_for('money.category'))
     return render_template("category.html", form=form, items=items, category=True)
 
 
@@ -47,7 +51,7 @@ def expense():
         ex.user = ID
         db.session.add(ex)
         db.session.commit()
-        return redirect(url_for('expense'))
+        return redirect(url_for('money.expense'))
     saldo = 0
     for cat in Category.query.filter_by(owner=ID).all():
         cat.summary()
@@ -60,3 +64,20 @@ def expense():
         money=saldo,
         expense=True
     )
+
+
+@bp.route('/plot.png')
+def plot_png():
+    ID = None
+    if current_user.is_authenticated:
+        ID = current_user.id
+    for cat in Category.query.filter_by(owner=ID):
+        cat.summary()
+    fig = Figure()
+    axis = fig.add_subplot(1, 1, 1)
+    xs = [cat.label for cat in Category.query.filter_by(owner=ID)]
+    ys = [cat.month_sum for cat in Category.query.filter_by(owner=ID)]
+    axis.bar(xs, ys)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')

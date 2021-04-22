@@ -1,6 +1,7 @@
 from getpass import getpass
 
-from app import db
+from flask import current_app as app
+from flaskr import db
 from flaskr.models import User
 
 username = input("Username: ")

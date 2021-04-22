@@ -1,5 +1,6 @@
 from flaskr import db
 from os import path, remove
+
 db_name = "myDB.db"
 
 if path.exists(db_name):
@@ -12,6 +13,6 @@ query = input("Want to add an admin? (Y/N): ")
 
 
 if query.lower() == "y":
-    pass
+    import add_user
 
 

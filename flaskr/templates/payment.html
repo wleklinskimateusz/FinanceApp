@@ -30,8 +30,8 @@
             </div>
             <div class="col">
                 <br>
-                <a href="{{ url_for('payments') }}" class="btn btn-success text-center">All Payments</a><br><br>
-                <a href="{{ url_for('student', student_id=payment.student) }}" class="btn btn btn-success text-center">{{ Student.query.filter_by(id=payment.student).first() }}</a>
+                <a href="{{ url_for('tutoring.payments') }}" class="btn btn-success text-center">All Payments</a><br><br>
+                <a href="{{ url_for('tutoring.student', student_id=payment.student) }}" class="btn btn btn-success text-center">{{ Student.query.filter_by(id=payment.student).first() }}</a>
 
             </div>
         </div>

@@ -29,6 +29,7 @@ class ExpenseForm(FlaskForm):
 class StudentForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     hourly_rate = FloatField("Hourly Rate")
+    messenger_link = StringField("Messenger link")
     submit = SubmitField("Add Student")
 
 

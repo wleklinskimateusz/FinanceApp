@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(120))
     joined = db.Column(db.DateTime(), index=True, default=datetime.utcnow())
     admin = db.Column(db.Boolean, default=False, nullable=False)
+    messenger_link = db.Column(db.String(100), nullable=True)
 
     def __repr__(self):
         return self.username
