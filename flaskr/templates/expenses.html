@@ -87,7 +87,7 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="card-title">You have to add Categories first</h2>
-                <img class="card-img-top" src="/flaskr/static/images/sorry.jpg">
+                <img class="card-img-top" src="{{ url_for('static', filename='images/sorry.jpg') }}">
                 <a class="btn btn-primary card-link" href="{{ url_for('money.category') }}">Click Here</a>
             </div>
         </div>
